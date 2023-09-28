@@ -1,0 +1,30 @@
+version: '2'
+services:
+  dictionary:
+    image: "polkins/music-metadata-service"
+    links:
+      - postgres
+    ports:
+      - 8585:8585
+  postgres:
+    image: "postgres:14.1"
+    volumes:
+      - ./dev/1-init.sql:/docker-entrypoint-initdb.d/1-init.sql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+  minio:
+    image: minio/minio:latest
+    ports:
+      - 9000:9000
+    hostname: minio-host
+    environment:
+      - MINIO_ACCESS_KEY=test
+      - MINIO_SECRET_KEY=test
+    volumes:
+      - ./data:/data
+    command: server /data
+    entrypoint: sh -c 'mkdir -p /data/tracks && /usr/bin/docker-entrypoint.sh $0'

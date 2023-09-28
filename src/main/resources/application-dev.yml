@@ -1,0 +1,21 @@
+# Профиль для запуска на локале у разработчика
+
+server.address: 127.0.0.1
+
+# minio properties
+minio:
+  endpoint: minio-host
+  port: 9000
+  access-key: test
+  secret-key: test
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/music_metadata?currentSchema=music_metadata,public"
+    password: "music_metadata"
+
+  liquibase:
+    password: "music_metadata"
+    url: "jdbc:postgresql://localhost:5432/music_metadata?currentSchema=music_metadata,public"
+
+

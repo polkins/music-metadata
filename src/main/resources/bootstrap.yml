@@ -1,0 +1,2 @@
+spring.application.name: music-metadata-service
+spring.profiles.active: ${ENVIRONMENT_PROFILE_NAME:dev}
