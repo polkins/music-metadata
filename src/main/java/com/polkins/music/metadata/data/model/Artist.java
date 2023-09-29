@@ -46,6 +46,6 @@ public class Artist {
 
     private String email;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "track", fetch = FetchType.LAZY)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "artist", fetch = FetchType.LAZY)
     private List<Track> tracks;
 }

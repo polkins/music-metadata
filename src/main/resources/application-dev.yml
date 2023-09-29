@@ -6,16 +6,16 @@ server.address: 127.0.0.1
 minio:
   endpoint: minio-host
   port: 9000
-  access-key: test
-  secret-key: test
+  access-key: music_metadata
+  secret-key: music_metadata
 
 spring:
   datasource:
-    url: "jdbc:postgresql://localhost:5432/music_metadata?currentSchema=music_metadata,public"
+    url: "jdbc:postgresql://localhost:5432/postgres?currentSchema=music_metadata,public"
     password: "music_metadata"
 
   liquibase:
     password: "music_metadata"
-    url: "jdbc:postgresql://localhost:5432/music_metadata?currentSchema=music_metadata,public"
+    url: "jdbc:postgresql://localhost:5432/postgres?currentSchema=music_metadata,public"
 
 

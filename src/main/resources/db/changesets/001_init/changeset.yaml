@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: p.spiryaeva
+      changes:
+        - sqlFile:
+            path: "db/changesets/001_init/0_ddl.sql"
+      rollback:
+        - sqlFile:
+            path: "db/changesets/001_init/rollback.sql"

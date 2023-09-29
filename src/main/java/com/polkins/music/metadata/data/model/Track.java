@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +16,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import java.time.LocalDateTime;
 
@@ -31,13 +30,8 @@ import java.time.LocalDateTime;
 @ToString(exclude = "artist")
 public class Track {
     @Id
-    @GenericGenerator(
-            name = "ID_GENERATOR",
-            parameters = {
-                    @Parameter(name = "initial_value", value = "1"),
-                    @Parameter(name = "sequence_name", value = "track_sequence")
-            })
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_generator")
+    @SequenceGenerator(name = "track_generator", sequenceName = "track_sequence", allocationSize = 1)
     private Long id;
 
     private String link;

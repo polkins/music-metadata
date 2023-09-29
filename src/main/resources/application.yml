@@ -9,9 +9,9 @@ minio:
 
 spring:
   datasource:
-    url: "jdbc:postgresql://postgres:5432/music_metadata?currentSchema=music_metadata,public"
+    url: "jdbc:postgresql://postgres:5432/postgres?currentSchema=music_metadata,public"
     username: "music_metadata"
-    password: ${secret.db.password}
+    password: "music_metadata"
     driver-class-name: "org.postgresql.Driver"
 
   liquibase:
@@ -20,6 +20,6 @@ spring:
     database-change-log-table: "databasechangelog"
     change-log: "classpath:db/changelog-master.yaml"
     default-schema: "music_metadata"
-    url: "jdbc:postgresql://postgres:5432/music_metadata?currentSchema=music_metadata,public"
-    user: "ru_svc_cis_bpm_file_storage_user"
-    password: ${secret.db.password-ddl}
+    url: "jdbc:postgresql://postgres:5432/postgres?currentSchema=music_metadata,public"
+    user: "music_metadata"
+    password: "music_metadata"

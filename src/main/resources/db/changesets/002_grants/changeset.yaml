@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: al.ilichev
+      changes:
+        - sqlFile:
+            path: "db/changesets/002_grants/0_dcl.sql"
+      rollback:
+        - sqlFile:
+            path: "db/changesets/002_grants/rollback.sql"

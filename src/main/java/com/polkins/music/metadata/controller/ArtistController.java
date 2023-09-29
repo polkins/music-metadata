@@ -37,14 +37,14 @@ public class ArtistController {
     @NotNull
     @ApiOperation(value = "Update artist data")
     @PutMapping(value = "/update")
-    public ArtistDTO update(ArtistDTO artistDTO) {
-        return artistService.update(pseudonym);
+    public void update(ArtistDTO artistDTO) {
+        artistService.update(artistDTO);
     }
 
     @NotNull
     @ApiOperation(value = "Get artist data")
     @GetMapping(value = "/{pseudonym}")
-    public ArtistDTO getArtist(@PathVariable String pseudonym) {
-        return artistService.findByPseudonym(pseudonym);
+    public ArtistDTO get(@PathVariable String pseudonym) {
+        return artistService.findArtistByPseudonym(pseudonym);
     }
 }

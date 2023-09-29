@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   dictionary:
     image: "polkins/music-metadata-service"
