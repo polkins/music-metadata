@@ -11,4 +11,6 @@ public interface ArtistService {
      ArtistDTO findArtistByPseudonym(String pseudonym);
 
     void update(ArtistDTO artistDTO);
+
+    ArtistDTO create(ArtistDTO artistDTO);
 }

@@ -16,11 +16,13 @@ import java.time.LocalDateTime;
 public class TrackDTO {
     private Long id;
 
-    private String name;
+    private String title;
 
     private LocalDateTime created;
 
     private String genre;
 
     private Long length;
+
+    private ArtistDTO artist;
 }

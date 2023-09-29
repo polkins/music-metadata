@@ -1,5 +1,6 @@
 package com.polkins.music.metadata.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polkins.music.metadata.data.repository.ArtistRepository;
 import com.polkins.music.metadata.data.repository.TrackRepository;
 import com.polkins.music.metadata.dto.ArtistDTO;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,7 +51,6 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     @Transactional
     public void update(ArtistDTO artistDTO) {
-
         var artist = artistRepository.findById(artistDTO.getUuid());
 
         if (artist.isPresent()) {
@@ -58,5 +59,11 @@ public class ArtistServiceImpl implements ArtistService {
             artist.get().setSurname(artistDTO.getSurname());
             artist.get().setPseudonym(artistDTO.getPseudonym());
         }
+    }
+
+    @Override
+    @Transactional
+    public ArtistDTO create(ArtistDTO artistDTO) {
+        return artistMapper.toDto(artistRepository.save(artistMapper.toDomainModel(artistDTO)));
     }
 }

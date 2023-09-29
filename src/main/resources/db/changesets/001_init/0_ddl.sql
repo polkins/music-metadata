@@ -3,7 +3,7 @@ create table artist
     uuid      uuid PRIMARY KEY,
     name      varchar,
     surname   varchar,
-    pseudonym varchar,
+    pseudonym varchar unique,
     email     varchar
 );
 
@@ -17,7 +17,7 @@ create table track
     genre       varchar,
     length      bigint,
     duration    bigint,
-    contentType varchar
+    content_type varchar
 );
 
 CREATE SEQUENCE track_sequence START 1 INCREMENT BY 1;

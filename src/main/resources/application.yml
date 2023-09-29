@@ -2,7 +2,8 @@ server.port: 8080
 
 # minio properties
 minio:
-  endpoint: minio-host:9000
+  endpoint: minio-host
+  port: 9000
   bucket: tracks
   access-key: music_metadata
   secret-key: music_metadata

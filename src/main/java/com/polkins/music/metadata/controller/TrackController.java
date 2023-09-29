@@ -45,7 +45,7 @@ public class TrackController {
         return ResponseEntity.ok()
                 .contentLength(track.getLength())
                 .contentType(MediaType.valueOf(track.getContentType()))
-                .header(CONTENT_DISPOSITION, "attachment; filename=" + track.getName())
+                .header(CONTENT_DISPOSITION, "attachment; filename=" + track.getTitle())
                 .body(pair.getLeft());
     }
 

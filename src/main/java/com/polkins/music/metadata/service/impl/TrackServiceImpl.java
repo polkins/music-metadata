@@ -67,20 +67,24 @@ public class TrackServiceImpl implements TrackService {
             Artist artist = artistRepository.findArtistByPseudonym(upload.getPseudonym())
                     .orElseThrow(() -> new RuntimeException("No artist with a such pseudonym " + upload.getPseudonym()));
 
-            String link = artist.getUuid() + "/" + file.getOriginalFilename();
-            saveS3(file, link);
-            log.debug("Track is successfully saved to s3" + link);
-
             Track track = new Track()
                     .setCreated(LocalDateTime.now()) //TODO check UTC+0
                     .setLength(file.getSize())
                     .setContentType(file.getContentType())
                     .setArtist(artist)
-                    .setLink(link)
+                    .setArtist(artist)
+                    .setTitle(file.getOriginalFilename())
                     .setGenre(upload.getGenre());
 
-            return trackMapper.toDto(trackRepository.save(track));
+            track = trackRepository.save(track);
 
+            String link = artist.getUuid() + "/" + track.getId() + "/" + file.getOriginalFilename();
+            saveS3(file, link);
+            log.debug("Track is successfully saved to s3" + link);
+
+            track.setLink(link);
+
+            return trackMapper.toDto(track);
         } catch (Exception e) {
             throw new RuntimeException("During uploading file occurred error: " + e.getMessage(), e);
         }

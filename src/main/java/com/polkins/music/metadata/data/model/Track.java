@@ -30,13 +30,13 @@ import java.time.LocalDateTime;
 @ToString(exclude = "artist")
 public class Track {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "track_generator")
     @SequenceGenerator(name = "track_generator", sequenceName = "track_sequence", allocationSize = 1)
     private Long id;
 
     private String link;
 
-    private String name;
+    private String title;
 
     private LocalDateTime created;
 

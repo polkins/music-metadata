@@ -5,6 +5,6 @@ import com.polkins.music.metadata.dto.TrackDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = ArtistMapper.class)
 public interface TrackMapper extends AbstractMapper<Track, TrackDTO> {
 }
