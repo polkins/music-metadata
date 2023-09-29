@@ -28,6 +28,13 @@ import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 public class TrackController {
     private final TrackService trackService;
 
+    /**
+     * Upload the track by artist`s pseudonym with additional information.
+     *
+     * @param file track to upload
+     * @param uploadDTO - additional information
+     * @return track metadata
+     */
     @ApiOperation(value = "Upload file")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public TrackDTO upload(
@@ -36,10 +43,17 @@ public class TrackController {
         return trackService.upload(file, uploadDTO);
     }
 
+    /**
+     * Actually this method is made in a simple manner, when we return whole file to the front end by one request.
+     * But if we speak about streaming platforms the way of giving file should be changed to streaming where file`s parts download by group of requests .
+     * @param id - id of the track
+     * @param pseudonym - pseudonym of the artist
+     * @return - track file
+     */
     @ApiOperation(value = "Play file by id and artist pseudonym")
     @GetMapping(value = "/play/{pseudonym}/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Resource> play(@PathVariable @NotNull Long id, @PathVariable @NotNull String pseudonym) {
-        var pair = trackService.download(pseudonym, id);
+        var pair = trackService.play(pseudonym, id);
         var track = pair.getRight();
 
         return ResponseEntity.ok()
@@ -49,9 +63,15 @@ public class TrackController {
                 .body(pair.getLeft());
     }
 
-//    @ApiOperation(value = "Upload file")
-//    @GetMapping(value = "/{id}")
-//    public TrackDTO get(@PathVariable @NotNull Long id) {
-//        return trackService.findTrack(id);
-//    }
+    /**
+     * Get metadata about the track which is stored in minIO.
+     *
+     * @param id - file id
+     * @return file dto
+     */
+    @ApiOperation(value = "Get track information")
+    @GetMapping(value = "/{id}")
+    public TrackDTO get(@PathVariable @NotNull Long id) {
+        return trackService.get(id);
+    }
 }

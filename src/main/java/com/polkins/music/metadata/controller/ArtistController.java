@@ -26,8 +26,16 @@ public class ArtistController {
 
     private final ArtistService artistService;
 
+    /**
+     * Get artist`s tracks by pages.
+     *
+     * @param pseudonym artist`s pseudonym
+     * @param page - page number
+     * @param size - page size
+     * @return page with tracks
+     */
     @NotNull
-    @ApiOperation(value = "Get all tracks og the artist by pseudonym")
+    @ApiOperation(value = "Get all tracks of the artist by pseudonym")
     @GetMapping(value = "/{pseudonym}/tracks")
     public Page<TrackDTO> tracks(@PathVariable String pseudonym,
                                  @RequestParam(defaultValue = "0") int page,
@@ -35,7 +43,10 @@ public class ArtistController {
         return artistService.findTracks(pseudonym, PageRequest.of(page, size));
     }
 
-
+    /**
+     *
+     * @param artistDTO - artist`s information
+     */
     @NotNull
     @ApiOperation(value = "Update artist data")
     @PutMapping(value = "/update")
@@ -43,6 +54,11 @@ public class ArtistController {
         artistService.update(artistDTO);
     }
 
+    /**
+     *
+     * @param pseudonym - artist`s pseydonym
+     * @return artist`s information
+     */
     @NotNull
     @ApiOperation(value = "Get artist data")
     @GetMapping(value = "/{pseudonym}")
@@ -50,6 +66,11 @@ public class ArtistController {
         return artistService.findArtistByPseudonym(pseudonym);
     }
 
+    /**
+     *
+     * @param artistDTO artist`s information
+     * @return artist`s information with primary key from DB
+     */
     @NotNull
     @ApiOperation(value = "Save artist data")
     @PostMapping

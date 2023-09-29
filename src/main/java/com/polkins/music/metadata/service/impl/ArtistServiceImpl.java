@@ -1,10 +1,10 @@
 package com.polkins.music.metadata.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polkins.music.metadata.data.repository.ArtistRepository;
 import com.polkins.music.metadata.data.repository.TrackRepository;
 import com.polkins.music.metadata.dto.ArtistDTO;
 import com.polkins.music.metadata.dto.TrackDTO;
+import com.polkins.music.metadata.exception.ArtistNotFoundException;
 import com.polkins.music.metadata.mapper.ArtistMapper;
 import com.polkins.music.metadata.mapper.TrackMapper;
 import com.polkins.music.metadata.service.ArtistService;
@@ -14,9 +14,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -35,7 +32,7 @@ public class ArtistServiceImpl implements ArtistService {
     public Page<TrackDTO> findTracks(String pseudonym, Pageable pageable) {
         var tracks = trackRepository.findTrackByArtistPseudonym(pseudonym, pageable)
                 .stream().map(trackMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
 
         return new PageImpl<>(tracks, pageable, tracks.size());
     }
@@ -45,7 +42,7 @@ public class ArtistServiceImpl implements ArtistService {
     public ArtistDTO findArtistByPseudonym(String pseudonym) {
         return artistRepository.findArtistByPseudonym(pseudonym)
                 .map(artistMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("No artist found with pseudonym - " + pseudonym));
+                .orElseThrow(() -> new ArtistNotFoundException("No artist found with pseudonym - " + pseudonym));
     }
 
     @Override

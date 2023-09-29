@@ -23,11 +23,10 @@
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 
-        <swagger.version>2.2.16</swagger.version>
         <version.mapstruct>1.5.5.Final</version.mapstruct>
         <version.mapstruct-lombok>0.2.0</version.mapstruct-lombok>
-        <springfox.swagger.version>3.0.0</springfox.swagger.version>
-        <springdoc.swagger.version>1.7.0</springdoc.swagger.version>
+        <swagger.version>2.0.4</swagger.version>
+        <swagger.annotations.version>1.6.11</swagger.annotations.version>
         <minio.version>8.5.6</minio.version>
     </properties>
     <dependencies>
@@ -74,24 +73,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox.swagger.version}</version>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.annotations.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox.swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-oas</artifactId>
-            <version>${springfox.swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${springfox.swagger.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>

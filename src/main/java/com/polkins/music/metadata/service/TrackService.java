@@ -11,5 +11,7 @@ public interface TrackService {
 
     TrackDTO upload(MultipartFile file, UploadDTO uploadDTO);
 
-    Pair<Resource, Track> download(String pseudonym, Long trackId);
+    Pair<Resource, Track> play(String pseudonym, Long trackId);
+
+    TrackDTO get(Long id);
 }

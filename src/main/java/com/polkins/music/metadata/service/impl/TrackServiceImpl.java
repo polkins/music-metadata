@@ -7,6 +7,11 @@ import com.polkins.music.metadata.data.repository.ArtistRepository;
 import com.polkins.music.metadata.data.repository.TrackRepository;
 import com.polkins.music.metadata.dto.TrackDTO;
 import com.polkins.music.metadata.dto.UploadDTO;
+import com.polkins.music.metadata.exception.ArtistNotFoundException;
+import com.polkins.music.metadata.exception.InternalMusicMetadataException;
+import com.polkins.music.metadata.exception.PlayTrackException;
+import com.polkins.music.metadata.exception.TrackNotFoundException;
+import com.polkins.music.metadata.exception.UploadTrackException;
 import com.polkins.music.metadata.mapper.TrackMapper;
 import com.polkins.music.metadata.service.TrackService;
 import io.minio.GetObjectArgs;
@@ -61,11 +66,11 @@ public class TrackServiceImpl implements TrackService {
     @Transactional
     public TrackDTO upload(MultipartFile file, UploadDTO upload) {
         log.info("Start saving of the track" + file.getOriginalFilename());
-        if (!AUDIO_MIME_TYPES.contains(file.getContentType())) throw new RuntimeException("Incorrect type of file!");
+        if (!AUDIO_MIME_TYPES.contains(file.getContentType())) throw new InternalMusicMetadataException("Incorrect type of file!");
 
         try {
             Artist artist = artistRepository.findArtistByPseudonym(upload.getPseudonym())
-                    .orElseThrow(() -> new RuntimeException("No artist with a such pseudonym " + upload.getPseudonym()));
+                    .orElseThrow(() -> new ArtistNotFoundException("No artist with a such pseudonym " + upload.getPseudonym()));
 
             Track track = new Track()
                     .setCreated(LocalDateTime.now()) //TODO check UTC+0
@@ -86,17 +91,17 @@ public class TrackServiceImpl implements TrackService {
 
             return trackMapper.toDto(track);
         } catch (Exception e) {
-            throw new RuntimeException("During uploading file occurred error: " + e.getMessage(), e);
+            throw new UploadTrackException("During uploading file occurred error: " + e.getMessage());
         }
     }
 
     @Transactional(readOnly = true)
-    public Pair<Resource, Track> download(String pseudonym, Long trackId) {
+    public Pair<Resource, Track> play(String pseudonym, Long trackId) {
         Objects.requireNonNull(trackId);
         Objects.requireNonNull(pseudonym);
 
         var track = trackRepository.findOne(findTrackByArtistPseudonym(pseudonym, trackId))
-                .orElseThrow(() -> new RuntimeException("No track found!"));
+                .orElseThrow(() -> new TrackNotFoundException("No track found!"));
 
         try (InputStream inputStream = minioClient.getObject(GetObjectArgs.builder()
                 .bucket(configuration.getBucket())
@@ -108,8 +113,13 @@ public class TrackServiceImpl implements TrackService {
             IOUtils.copy(inputStream, outputStream);
             return Pair.of(new ByteArrayResource(outputStream.toByteArray()), track);
         } catch (Exception ex) {
-            throw new RuntimeException(String.format("Failed reading file with uuid <%s>", track.getLink()), ex);
+            throw new PlayTrackException(String.format("Failed playing track <%s>", track.getTitle()));
         }
+    }
+
+    @Transactional(readOnly = true)
+    public TrackDTO get(Long id) {
+        return trackRepository.findById(id).map(trackMapper::toDto).orElseThrow(() -> new TrackNotFoundException("No track found with such id"));
     }
 
     private void saveS3(MultipartFile file, String pathToFile) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
