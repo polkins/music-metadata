@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -22,7 +22,7 @@ public class TrackDTO {
     private String title;
 
     @ApiModelProperty("Track`s duration")
-    private LocalDateTime created;
+    private ZonedDateTime created;
 
     @ApiModelProperty("Track`s genere")
     private String genre;

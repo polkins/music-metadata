@@ -38,7 +38,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -66,14 +67,15 @@ public class TrackServiceImpl implements TrackService {
     @Transactional
     public TrackDTO upload(MultipartFile file, UploadDTO upload) {
         log.info("Start saving of the track" + file.getOriginalFilename());
-        if (!AUDIO_MIME_TYPES.contains(file.getContentType())) throw new InternalMusicMetadataException("Incorrect type of file!");
+        if (!AUDIO_MIME_TYPES.contains(file.getContentType()))
+            throw new InternalMusicMetadataException("Incorrect type of file!");
 
         try {
             Artist artist = artistRepository.findArtistByPseudonym(upload.getPseudonym())
                     .orElseThrow(() -> new ArtistNotFoundException("No artist with a such pseudonym " + upload.getPseudonym()));
 
             Track track = new Track()
-                    .setCreated(LocalDateTime.now()) //TODO check UTC+0
+                    .setCreated(ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC))
                     .setLength(file.getSize())
                     .setContentType(file.getContentType())
                     .setArtist(artist)

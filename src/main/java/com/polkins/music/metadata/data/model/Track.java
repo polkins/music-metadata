@@ -18,6 +18,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Entity
@@ -38,7 +39,7 @@ public class Track {
 
     private String title;
 
-    private LocalDateTime created;
+    private ZonedDateTime created;
 
     private String genre;
 
