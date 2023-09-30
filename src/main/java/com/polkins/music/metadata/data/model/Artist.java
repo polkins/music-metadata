@@ -27,7 +27,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 @Table(name = "artist")
 @EqualsAndHashCode(of = "uuid")
-@ToString(exclude = "tracks")
+@ToString(exclude = {"tracks", "artistOfTheDays"})
 public class Artist {
 
     @Id
@@ -43,6 +43,11 @@ public class Artist {
 
     private String email;
 
+    private Boolean isDaily;
+
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "artist", fetch = FetchType.LAZY)
     private List<Track> tracks;
+
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "artist", fetch = FetchType.LAZY)
+    private List<ArtistOfTheDay> artistOfTheDays;
 }

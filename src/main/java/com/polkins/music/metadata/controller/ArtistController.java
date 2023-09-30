@@ -44,6 +44,7 @@ public class ArtistController {
     }
 
     /**
+     * Update artist.
      *
      * @param artistDTO - artist`s information
      */
@@ -55,6 +56,7 @@ public class ArtistController {
     }
 
     /**
+     * Get artist.
      *
      * @param pseudonym - artist`s pseydonym
      * @return artist`s information
@@ -62,11 +64,24 @@ public class ArtistController {
     @NotNull
     @ApiOperation(value = "Get artist data")
     @GetMapping(value = "/{pseudonym}")
-    public ArtistDTO get(@PathVariable String pseudonym) {
+    public ArtistDTO find(@PathVariable String pseudonym) {
         return artistService.findArtistByPseudonym(pseudonym);
     }
 
     /**
+     * Get daily artist.
+     *
+     * @return artist`s information
+     */
+//    @NotNull
+//    @ApiOperation(value = "Get daily artist data")
+//    @GetMapping(value = "/daily")
+//    public ArtistDTO findDaily() {
+//        return artistService.findDaily(pseudonym);
+//    }
+
+    /**
+     * Create artist.
      *
      * @param artistDTO artist`s information
      * @return artist`s information with primary key from DB
