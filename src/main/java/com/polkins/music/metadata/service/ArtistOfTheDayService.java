@@ -19,6 +19,12 @@ public class ArtistOfTheDayService {
     // for test
 //    private long delta = 0;
 
+    /**
+     * markNewArtistOfTheDay for three days - yesterday, today, tomorrow
+     * it is done because of different timezones
+     * Of-course we should think about mechanism of horizontal scaling of scheduler.
+     * Spring has such mechanism.But here I decided not to explore this.
+     */
     @Transactional
     public void markNewArtistOfTheDay() {
 //        LocalDate now = LocalDate.now().plusDays(delta++);
