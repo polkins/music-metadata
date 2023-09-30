@@ -71,7 +71,7 @@ public class ArtistController {
     }
 
     /**
-     * Get daily artist data
+     * Get daily artist data. Should be cached! use spring boot cache further.
      *
      * @param zonedDateTime client`s date example 2007-12-03T10:15:30+01:00
      * @return artist dto
