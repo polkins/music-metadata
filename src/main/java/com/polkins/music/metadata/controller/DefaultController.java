@@ -11,7 +11,7 @@ public class DefaultController {
 
     @RequestMapping({"/", "/api"})
     public String home() {
-        return "redirect:swagger-ui/";
+        return "redirect:/swagger-ui/index.html#/";
     }
 
 }
