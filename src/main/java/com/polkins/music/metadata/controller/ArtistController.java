@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.ZonedDateTime;
+
 @Slf4j
 @RestController
 @AllArgsConstructor
@@ -69,16 +71,17 @@ public class ArtistController {
     }
 
     /**
-     * Get daily artist.
+     * Get daily artist data
      *
-     * @return artist`s information
+     * @param zonedDateTime client`s date example 2007-12-03T10:15:30+01:00
+     * @return artist dto
      */
-//    @NotNull
-//    @ApiOperation(value = "Get daily artist data")
-//    @GetMapping(value = "/daily")
-//    public ArtistDTO findDaily() {
-//        return artistService.findDaily(pseudonym);
-//    }
+    @NotNull
+    @ApiOperation(value = "Get daily artist data")
+    @GetMapping(value = "/daily")
+    public ArtistDTO findDaily(@RequestParam ZonedDateTime zonedDateTime) {
+        return artistService.findDaily(zonedDateTime);
+    }
 
     /**
      * Create artist.

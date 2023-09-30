@@ -15,6 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
+
+import static com.polkins.music.metadata.utils.specification.ArtistSpecification.findDailyArtist;
+
 @Service
 @AllArgsConstructor
 public class ArtistServiceImpl implements ArtistService {
@@ -62,5 +66,13 @@ public class ArtistServiceImpl implements ArtistService {
     @Transactional
     public ArtistDTO create(ArtistDTO artistDTO) {
         return artistMapper.toDto(artistRepository.save(artistMapper.toDomainModel(artistDTO)));
+    }
+
+    @Override
+    public ArtistDTO findDaily(ZonedDateTime zonedDateTime) {
+        var date = zonedDateTime.toLocalDate();
+        var dailyArtist = artistRepository.findOne(findDailyArtist(date))
+                .orElseThrow(() -> new ArtistNotFoundException("No daily artist found"));
+        return artistMapper.toDto(dailyArtist);
     }
 }
