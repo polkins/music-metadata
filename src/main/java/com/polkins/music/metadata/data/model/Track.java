@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Data

@@ -5,6 +5,7 @@ import com.polkins.music.metadata.data.repository.TrackRepository;
 import com.polkins.music.metadata.dto.ArtistDTO;
 import com.polkins.music.metadata.dto.TrackDTO;
 import com.polkins.music.metadata.exception.ArtistNotFoundException;
+import com.polkins.music.metadata.exception.InternalMusicMetadataException;
 import com.polkins.music.metadata.mapper.ArtistMapper;
 import com.polkins.music.metadata.mapper.TrackMapper;
 import com.polkins.music.metadata.service.ArtistService;
@@ -51,7 +52,7 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     @Transactional
-    public void update(ArtistDTO artistDTO) {
+    public ArtistDTO update(ArtistDTO artistDTO) {
         var artist = artistRepository.findById(artistDTO.getUuid());
 
         if (artist.isPresent()) {
@@ -60,6 +61,8 @@ public class ArtistServiceImpl implements ArtistService {
             artist.get().setSurname(artistDTO.getSurname());
             artist.get().setPseudonym(artistDTO.getPseudonym());
         }
+
+        return artistMapper.toDto(artist.orElseThrow(() -> new InternalMusicMetadataException("No artist for update")));
     }
 
     @Override

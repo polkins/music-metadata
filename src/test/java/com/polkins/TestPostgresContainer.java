@@ -20,7 +20,7 @@ public class TestPostgresContainer {
     private static final String CONTAINER_USERNAME = "postgres";
     private static final String CONTAINER_PASSWORD = "postgres";
     private static final String CONTAINER_SCHEMA = "music_metadata";
-    private static final String CONTAINER_INIT_SCRIPT = "docker/dev/1-init.sql";
+    private static final String CONTAINER_INIT_SCRIPT = "dev/1-init.sql";
 
     @SuppressWarnings("rawtypes")
     private static final PostgreSQLContainer postgreSQLContainer;

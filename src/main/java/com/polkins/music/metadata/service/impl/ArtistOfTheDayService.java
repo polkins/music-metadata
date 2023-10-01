@@ -1,4 +1,4 @@
-package com.polkins.music.metadata.service;
+package com.polkins.music.metadata.service.impl;
 
 import com.polkins.music.metadata.data.model.ArtistOfTheDay;
 import com.polkins.music.metadata.data.repository.ArtistOfTheDayRepository;

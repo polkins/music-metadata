@@ -8,6 +8,10 @@ minio:
   access-key: music_metadata
   secret-key: music_metadata
 
+daily:
+  artist:
+    fixedRate: 86400000 # 24h
+
 spring:
   datasource:
     url: "jdbc:postgresql://postgres:5432/postgres?currentSchema=music_metadata,public"

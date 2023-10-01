@@ -17,9 +17,7 @@ public class ArtistSpecification {
             ListJoin<Artist, ArtistOfTheDay> join = root.joinList(Artist_.ARTIST_OF_THE_DAYS);
             query.distinct(true);
 
-            return criteriaBuilder.and(
-                            criteriaBuilder.equal(root.get(Artist_.isDaily), true),
-                            criteriaBuilder.equal(join.get(ArtistOfTheDay_.date), date));
+            return criteriaBuilder.equal(join.get(ArtistOfTheDay_.date), date);
         };
     }
 }
