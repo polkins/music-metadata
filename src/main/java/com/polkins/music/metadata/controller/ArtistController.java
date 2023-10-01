@@ -32,8 +32,8 @@ public class ArtistController {
      * Get artist`s tracks by pages.
      *
      * @param pseudonym artist`s pseudonym
-     * @param page - page number
-     * @param size - page size
+     * @param page      - page number
+     * @param size      - page size
      * @return page with tracks
      */
     @NotNull
@@ -53,8 +53,8 @@ public class ArtistController {
     @NotNull
     @ApiOperation(value = "Update artist data")
     @PutMapping(value = "/update")
-    public void update(@NotNull @RequestBody ArtistDTO artistDTO) {
-        artistService.update(artistDTO);
+    public ArtistDTO update(@NotNull @RequestBody ArtistDTO artistDTO) {
+        return artistService.update(artistDTO);
     }
 
     /**
