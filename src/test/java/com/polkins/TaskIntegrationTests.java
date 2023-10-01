@@ -147,8 +147,7 @@ class TaskIntegrationTests extends AbstractIntegrationTest {
      * This means if there are n artists, after n days, the cycle restarts with the first artist, ensuring an equal
      * chance for each artist to be the "Artist of the Day".
      */
-    @Test
-    @Ignore
+//    @Test
     void artistOfTheDay() {
         artistService.create(
                 new ArtistDTO()
